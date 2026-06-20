@@ -9,11 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
-    private String name;
-    private String email;
-    private String password;
+public class OtpRequest {
     private String phone;
-    private String otp;
-    private String firebaseToken;
+    private String email;
 }
