@@ -1,0 +1,19 @@
+{
+  "id": "e98e4d28-765f-4a0b-99f6-068641dbefb4",
+  "name": "YiYi Book Local Environment",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8081",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "any",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}
