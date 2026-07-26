@@ -5,3 +5,5 @@ temp_db/
 target/
 uploads/
 backend/target/
+backend/postman/report*.html
+backend/postman/report*.xml

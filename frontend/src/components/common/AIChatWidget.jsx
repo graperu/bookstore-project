@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaCommentDots, FaTimes, FaPaperPlane, FaRobot, FaUser, FaKey, FaExpand, FaCompress, FaTrash } from 'react-icons/fa';
+import { FaTimes, FaPaperPlane, FaRobot, FaUser, FaKey, FaExpand, FaCompress, FaTrash } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
 
 export default function AIChatWidget() {
@@ -56,7 +56,7 @@ export default function AIChatWidget() {
       try { 
         setMessages(JSON.parse(saved)); 
         return;
-      } catch(e) {}
+      } catch { /* ignore malformed cached history */ }
     }
     setMessages([
       { role: 'model', content: user ? `Xin chào ${user.fullName}! Mình là trợ lý AI của YiYi Book. Hôm nay bạn muốn tìm sách gì ạ?` : 'Xin chào! Mình là trợ lý AI của YiYi Book. Bạn cần tư vấn gì ạ?' }

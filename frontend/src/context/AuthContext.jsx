@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 
+// eslint-disable-next-line react-refresh/only-export-components -- co-located with AuthProvider by design; splitting into a separate file would mean touching every one of the ~29 importers for a Fast Refresh nicety only
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
@@ -17,6 +18,27 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8081/api';
+
+  const refreshUser = async (tokenOverride) => {
+    try {
+      const token = tokenOverride || localStorage.getItem('token');
+      if (!token) return;
+      const res = await axios.get(`${API_BASE_URL}/users/profile?t=${Date.now()}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
+      setUser(res.data);
+      localStorage.setItem('user', JSON.stringify(res.data));
+    } catch(e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     // Check local storage for token on mount
@@ -64,28 +86,9 @@ export const AuthProvider = ({ children }) => {
       axios.interceptors.request.eject(reqInterceptor);
       axios.interceptors.response.eject(resInterceptor);
     };
+    // Run once on mount only to register the interceptors a single time
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const refreshUser = async (tokenOverride) => {
-    try {
-      const token = tokenOverride || localStorage.getItem('token');
-      if (!token) return;
-      const res = await axios.get(`${API_BASE_URL}/users/profile?t=${Date.now()}`, { 
-        headers: { 
-          Authorization: `Bearer ${token}`,
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache',
-          'Expires': '0'
-        } 
-      });
-      setUser(res.data);
-      localStorage.setItem('user', JSON.stringify(res.data));
-    } catch(e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const login = (userData, token) => {
     setUser(userData);
