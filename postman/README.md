@@ -50,3 +50,6 @@ Giảng viên chấm bài rất thích việc chạy test tự động qua Comma
    newman run YiYiBook_Collection.json -e YiYiBook_Environment.json
    ```
 3. Newman sẽ thực thi kiểm thử và xuất ra một bảng báo cáo kết quả kiểm thử ngay trên cửa sổ terminal của bạn.
+
+
+////
